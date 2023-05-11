@@ -12,8 +12,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        GMSServices.provideAPIKey(Bundle.main.object(forInfoDictionaryKey: "GoogleAPIkey") as! String)
-        
+
         // For Mapbox add key "MGLMapboxAccessToken" in Info.plist
         return true
     }

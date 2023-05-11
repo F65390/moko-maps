@@ -36,7 +36,6 @@ dependencyResolutionManagement {
 includeBuild("maps-build-logic")
 
 include(":maps")
-include(":maps-google")
 include(":maps-mapbox")
 include(":sample:android-app")
 include(":sample:mpp-library")

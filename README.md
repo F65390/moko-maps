@@ -39,7 +39,6 @@ project build.gradle
 ```groovy
 dependencies {
     commonMainApi("dev.icerock.moko:maps:0.6.0")
-    commonMainApi("dev.icerock.moko:maps-google:0.6.0")
     commonMainApi("dev.icerock.moko:maps-mapbox:0.6.0")
 }
 
@@ -53,10 +52,8 @@ kotlin.targets
             .configureEach {
                 val framework = this as org.jetbrains.kotlin.gradle.plugin.mpp.Framework
                 val frameworks = listOf("Base", "Maps").map { frameworkPath ->
-                    project.file("../ios-app/Pods/GoogleMaps/$frameworkPath/Frameworks").path.let { "-F$it" }
-                }.plus(
                     project.file("../ios-app/Pods/Mapbox-iOS-SDK/dynamic").path.let { "-F$it" }
-                )
+                }
 
                 framework.linkerOpts(frameworks)
             }
@@ -68,16 +65,7 @@ With [mobile-multiplatform-gradle-plugin](https://github.com/icerockdev/mobile-m
 ```kotlin
 cocoaPods {
     podsProject = file("ios-app/Pods/Pods.xcodeproj")
-
-    precompiledPod(
-        scheme = "GoogleMaps",
-        onlyLink = true
-    ) { podsDir ->
-        listOf(
-            File(podsDir, "GoogleMaps/Base/Frameworks"),
-            File(podsDir, "GoogleMaps/Maps/Frameworks")
-        )
-    }
+    
     precompiledPod(
         scheme = "Mapbox",
         onlyLink = true
@@ -89,82 +77,8 @@ cocoaPods {
 
 project Podfile
 ```ruby
-pod 'GoogleMaps', '3.7.0'
 pod 'Mapbox-iOS-SDK', '5.5.0'
 
-# GoogleMaps is static library that already linked in moko-maps-google. Remove duplicated linking.
-post_install do |installer|
-  host_targets = installer.aggregate_targets.select { |aggregate_target|
-    aggregate_target.name.include? "Pods-"
-  }
-  
-  host_targets.each do |host_target|
-    host_target.xcconfigs.each do |config_name, config_file|
-      config_file.frameworks.delete("GoogleMaps")
-      config_file.frameworks.delete("GoogleMapsBase")
-      config_file.frameworks.delete("GoogleMapsCore")
-      
-      xcconfig_path = host_target.xcconfig_path(config_name)
-      config_file.save_as(xcconfig_path)
-    end
-  end
-end
-```
-
-## Usage
-### Markers
-```kotlin
-class MarkerViewModel(
-    val mapsController: GoogleMapController
-) : ViewModel() {
-
-    fun start() {
-        viewModelScope.launch {
-            val marker1 = mapsController.addMarker(
-                image = MR.images.marker,
-                latLng = LatLng(
-                    latitude = 55.045853,
-                    longitude = 82.920154
-                ),
-                rotation = 0.0f
-            ) {
-                println("marker 1 pressed!")
-            }
-
-            marker1.rotation = 90.0f
-        }
-    }
-}
-```
-### Route
-```kotlin
-class MarkerViewModel(
-    val mapsController: GoogleMapController
-) : ViewModel() {
-
-    fun start() {
-        viewModelScope.launch {
-            val route = mapsController.buildRoute(
-                points = listOf(
-                    LatLng(
-                        latitude = 55.032200,
-                        longitude = 82.889360
-                    ),
-                    LatLng(
-                        latitude = 55.030853,
-                        longitude = 82.920154
-                    ),
-                    LatLng(
-                        latitude = 55.013109,
-                        longitude = 82.926480
-                    )
-                ),
-                lineColor = Color(0xCCCC00FF),
-                markersImage = MR.images.marker
-            )
-        }
-    }
-}
 ```
 
 ## Samples
@@ -177,14 +91,11 @@ Before open project need to setup `gradle.properties` with tokens:
 mapbox.secretToken=YOUR_SECRET_MAPBOX_KEY
 mapbox.publicToken=YOUR_PUBLIC_MAPBOX_KEY
 
-# google maps api key by guide https://developers.google.com/maps/documentation/android-sdk/get-api-key
-googleMaps.apiKey=YOUR_API_KEY
 ```
 
 # ios info.plist setup with tokens:
 ```
 MGLMapboxAccessToken=YOUR_PUBLIC_MAPBOX_KEY
-GoogleAPIkey=YOUR_API_KEY
 ```
 add the following entry to your `.netrc` file:
 ```
@@ -194,7 +105,6 @@ password YOUR_SECRET_MAPBOX_KEY
 ```
 
 - The [maps directory](maps) contains the base classes for all maps providers;
-- The [maps-google directory](maps-google) contains the Google Maps implementation;
 - The [maps-mapbox directory](maps-mapbox) contains the mapbox implementation;
 - In [sample directory](sample) contains sample apps for Android and iOS; plus the mpp-library connected to the apps.
 

@@ -21,7 +21,6 @@ dependencies {
     commonMainApi(libs.mokoMvvm)
     commonMainApi(libs.mokoPermissions)
     commonMainApi(projects.maps)
-    commonMainApi(projects.mapsGoogle)
     commonMainApi(projects.mapsMapbox)
     "androidMainImplementation"(libs.lifecycle)
 }
@@ -33,20 +32,10 @@ multiplatformResources {
 framework {
     export(libs.mokoPermissions)
     export(projects.maps)
-    export(projects.mapsGoogle)
     export(projects.mapsMapbox)
 }
 
 cocoaPods {
-    precompiledPod(
-        scheme = "GoogleMaps",
-        onlyLink = true
-    ) { podsDir ->
-        listOf(
-            File(podsDir, "GoogleMaps/Base/Frameworks"),
-            File(podsDir, "GoogleMaps/Maps/Frameworks")
-        )
-    }
     precompiledPod(
         scheme = "Mapbox",
         onlyLink = true

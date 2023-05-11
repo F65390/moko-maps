@@ -18,10 +18,6 @@ class MainActivity : AppCompatActivity() {
             R.layout.activity_main
         )
 
-        binding.googleMaps.setOnClickListener {
-            startActivity(Intent(this, GoogleMapsActivity::class.java))
-        }
-
         binding.mapbox.setOnClickListener {
             startActivity(Intent(this, MapboxActivity::class.java))
         }
