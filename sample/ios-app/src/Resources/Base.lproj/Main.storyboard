@@ -21,13 +21,6 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="yC4-67-ggQ">
                                 <rect key="frame" x="111.5" y="244" width="97" height="80"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kz4-8T-EPd">
-                                        <rect key="frame" x="0.0" y="0.0" width="97" height="30"/>
-                                        <state key="normal" title="Google Maps"/>
-                                        <connections>
-                                            <segue destination="yk9-44-Bpf" kind="show" id="zRy-B0-rPd"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gvh-kk-OsM">
                                         <rect key="frame" x="0.0" y="50" width="97" height="30"/>
                                         <state key="normal" title="Mapbox Maps"/>
@@ -59,16 +52,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hPl-VZ-hAb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-4350" y="173"/>
-        </scene>
-        <!--Google Map View Controller-->
-        <scene sceneID="aiQ-BH-WeJ">
-            <objects>
-                <viewController id="yk9-44-Bpf" customClass="GoogleMapViewController" customModule="moko_maps" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="iVU-wz-iC3"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="454-Cg-jr2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-4350" y="-678"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tQD-TK-EMQ">
